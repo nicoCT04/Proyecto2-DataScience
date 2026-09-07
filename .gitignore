@@ -1,0 +1,41 @@
+# ------------------------------------------------------------
+# Entornos virtuales (cada quien lo regenera con requirements.txt)
+# ------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# ------------------------------------------------------------
+# Videos: NO se versionan (~3.8 GB). Se re-descargan desde el
+# dataset de Hugging Face con src/download_clips.sh. Los CSV
+# de anotaciones e inventario sí se conservan.
+# ------------------------------------------------------------
+data/clips/
+*.mp4
+
+# Frames extraidos (reproducibles a partir de los clips)
+data/frames/
+
+# ------------------------------------------------------------
+# Sistema operativo / editores
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# ------------------------------------------------------------
+# Secretos
+# ------------------------------------------------------------
+.env
+.env.*
