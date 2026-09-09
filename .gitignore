@@ -25,6 +25,12 @@ data/clips/
 # Frames extraidos (reproducibles a partir de los clips)
 data/frames/
 
+# Pesos de modelos (se descargan solos con ultralytics)
+*.pt
+
+# HTML exportado de los notebooks (reproducible con nbconvert)
+docs/html/
+
 # ------------------------------------------------------------
 # Sistema operativo / editores
 # ------------------------------------------------------------

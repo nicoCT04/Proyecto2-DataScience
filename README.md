@@ -33,10 +33,13 @@ competencia *DFL - Bundesliga Data Shootout* de Kaggle.
 ## Estructura
 
 ```
-data/            train.csv, clips.csv, clips_inventory.csv (clips/ ignorado)
-notebooks/       00_marco_del_problema.ipynb, 01_descripcion_datos.ipynb
-src/             download_clips.sh, build_inventory.py, eda_figures.py
-outputs/         figuras del análisis exploratorio
+data/            train.csv, clips.csv, *_inventory/features/detections/jersey .csv (clips/ ignorado)
+notebooks/       00_marco_del_problema · 01_descripcion_datos · 02_eda_visual_frames
+                 03_deteccion_jugadores_equipos · 04_movimiento_temporal_conclusiones
+src/             download_clips.sh · build_inventory.py · eda_figures.py
+                 extract_features.py · detect_players.py
+outputs/         17 figuras del análisis exploratorio
+docs/            INFORME.md (informe) · COMO_ENTREGAR.md · enunciado
 ```
 
 ## Reproducibilidad
@@ -45,9 +48,12 @@ outputs/         figuras del análisis exploratorio
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-bash src/download_clips.sh      # descarga los 200 clips a data/clips/
-python src/build_inventory.py   # genera data/clips_inventory.csv
-python src/eda_figures.py       # genera las figuras en outputs/
+bash src/download_clips.sh       # 1. descarga los 200 clips a data/clips/
+python src/build_inventory.py    # 2. inventario de clips -> data/clips_inventory.csv
+python src/extract_features.py   # 3. features visuales -> data/frame_features.csv
+python src/detect_players.py     # 4. jugadores YOLO + equipos -> data/player_*.csv
+python src/eda_figures.py        # 5. figuras de contexto -> outputs/
+# los notebooks 02-04 leen los CSV y generan el resto de figuras
 ```
 
 ## Reparto del trabajo (grupo de 4)

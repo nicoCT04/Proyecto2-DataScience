@@ -2,4 +2,7 @@ pandas
 numpy
 matplotlib
 opencv-python
+scikit-learn
+scipy
+ultralytics
 jupyter
