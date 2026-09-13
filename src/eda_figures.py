@@ -7,7 +7,6 @@ taxonomy and temporal density of the events.
 """
 
 import ast
-from collections import Counter
 
 import matplotlib
 matplotlib.use("Agg")
@@ -32,28 +31,35 @@ def main():
     # Fig 1 - clip size distribution
     fig, ax = plt.subplots(figsize=(6, 3.5))
     ax.hist(inv["size_mb"], bins=20, color="#2b6cb0", edgecolor="white")
-    ax.set(xlabel="Clip size (MB)", ylabel="Number of clips",
-           title="Size distribution of the 200 clips")
+    ax.set(xlabel="Tamaño del clip (MB)", ylabel="Número de clips",
+           title="Distribución del tamaño de los 200 clips")
     fig.tight_layout(); fig.savefig("outputs/01_clip_size_hist.png"); plt.close(fig)
 
     # Fig 2 - event types in train.csv (context)
     fig, ax = plt.subplots(figsize=(6, 3.5))
     train["event"].value_counts().plot(kind="bar", color="#2f855a",
                                         edgecolor="white", ax=ax)
-    ax.set(xlabel="Event type", ylabel="Frequency",
-           title="Annotated events in train.csv (context)")
+    ax.set(xlabel="Tipo de evento", ylabel="Frecuencia",
+           title="Eventos anotados en train.csv (contexto)")
     ax.tick_params(axis="x", rotation=0)
     fig.tight_layout(); fig.savefig("outputs/02_event_types.png"); plt.close(fig)
 
-    # Fig 3 - attributes of 'play' events (pass taxonomy)
+    # Fig 3 - 'play' events: action type (pass / cross) x context
+    # Each play carries two attributes: the action and its context. Counting
+    # the attributes independently mixes passes and crosses, so cross them.
     plays = train[train["event"] == "play"]
-    counts = Counter()
-    for attrs in plays["event_attributes"]:
-        counts.update(parse_attrs(attrs))
-    series = pd.Series(dict(counts)).sort_values()
+    attrs = plays["event_attributes"].apply(parse_attrs)
+    table = pd.crosstab(attrs.str[1], attrs.str[0])
+    table = table.loc[table.sum(axis=1).sort_values().index]
     fig, ax = plt.subplots(figsize=(6, 3.5))
-    series.plot(kind="barh", color="#c05621", edgecolor="white", ax=ax)
-    ax.set(xlabel="Frequency", title="Attributes of 'play' events (pass types)")
+    table.plot(kind="barh", stacked=True, color=["#c05621", "#2b6cb0"],
+               edgecolor="white", ax=ax)
+    for i, total in enumerate(table.sum(axis=1)):
+        ax.text(total, i, f" {total:,}", va="center", fontsize=9)
+    ax.set(xlabel="Frecuencia", ylabel="Contexto",
+           title="Jugadas (play) por acción y contexto")
+    ax.set_xlim(0, table.sum(axis=1).max() * 1.15)
+    ax.legend(title="Acción")
     fig.tight_layout(); fig.savefig("outputs/03_play_attributes.png"); plt.close(fig)
 
     # Fig 4 - temporal density of passes in the busiest match
@@ -62,8 +68,8 @@ def main():
     sub = passes[passes["video_id"] == video]
     fig, ax = plt.subplots(figsize=(6, 3.5))
     ax.hist(sub["time"] / 60, bins=30, color="#6b46c1", edgecolor="white")
-    ax.set(xlabel="Match minute", ylabel="Passes",
-           title=f"Temporal density of passes - video {video}")
+    ax.set(xlabel="Minuto del video", ylabel="Pases",
+           title=f"Densidad temporal de pases - video {video}")
     fig.tight_layout(); fig.savefig("outputs/04_pass_temporal_density.png"); plt.close(fig)
 
     print("Figures written to outputs/")
