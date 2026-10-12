@@ -22,11 +22,18 @@ __pycache__/
 data/clips/
 *.mp4
 
+# Subclips etiquetados (~4.6 GB), se descargan con src/download_subclips.sh
+data/subclips/
+
 # Frames extraidos (reproducibles a partir de los clips)
 data/frames/
 
-# Pesos de modelos (se descargan solos con ultralytics)
+# Pesos preentrenados (se descargan solos: yolov8n y resnet18 desde Hugging Face).
+# Los modelos entrenados por nosotros (models/*.joblib, models/gru.pt) sí se versionan
+# porque la app los necesita.
+models/pretrained/
 *.pt
+!models/gru.pt
 
 # HTML exportado de los notebooks (reproducible con nbconvert)
 docs/html/
@@ -45,3 +52,9 @@ Thumbs.db
 # ------------------------------------------------------------
 .env
 .env.*
+
+# Videos de ejemplo para la app (4 subclips de prueba, ~15 MB)
+!app/samples/*.mp4
+
+# Configuración local de Claude Code
+.claude/

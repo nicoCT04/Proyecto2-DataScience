@@ -6,3 +6,13 @@ scikit-learn
 scipy
 ultralytics
 jupyter
+torch
+torchvision
+safetensors
+xgboost
+joblib
+streamlit
+plotly
+python-docx
+python-pptx
+docx2pdf
