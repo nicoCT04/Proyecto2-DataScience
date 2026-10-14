@@ -1,0 +1,28 @@
+{
+  "logreg": {
+    "best_params": {
+      "clf__C": 1.0,
+      "clf__class_weight": null
+    },
+    "cv_f1_macro": 0.3239,
+    "cv_f1_macro_std": 0.0917
+  },
+  "rf": {
+    "best_params": {
+      "clf__max_depth": 10,
+      "clf__min_samples_leaf": 2,
+      "clf__n_estimators": 300
+    },
+    "cv_f1_macro": 0.3656,
+    "cv_f1_macro_std": 0.0311
+  },
+  "xgb": {
+    "best_params": {
+      "clf__learning_rate": 0.05,
+      "clf__max_depth": 3,
+      "clf__n_estimators": 600
+    },
+    "cv_f1_macro": 0.3777,
+    "cv_f1_macro_std": 0.0714
+  }
+}
