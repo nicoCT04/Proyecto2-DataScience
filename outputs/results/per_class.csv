@@ -1,0 +1,17 @@
+modelo,clase,precision,recall,f1,soporte
+logreg,background,0.25,0.41,0.3106,100
+logreg,challenge,0.381,0.16,0.2254,100
+logreg,play,0.3472,0.25,0.2907,100
+logreg,throwin,0.2857,0.3871,0.3288,62
+rf,background,0.3294,0.84,0.4732,100
+rf,challenge,0.6667,0.02,0.0388,100
+rf,play,0.5806,0.18,0.2748,100
+rf,throwin,0.3973,0.4677,0.4296,62
+xgb,background,0.3067,0.5,0.3802,100
+xgb,challenge,0.2353,0.08,0.1194,100
+xgb,play,0.4681,0.44,0.4536,100
+xgb,throwin,0.4085,0.4677,0.4361,62
+gru,background,0.2222,0.06,0.0945,100
+gru,challenge,0.5,0.01,0.0196,100
+gru,play,0.2727,0.03,0.0541,100
+gru,throwin,0.1708,0.8871,0.2865,62

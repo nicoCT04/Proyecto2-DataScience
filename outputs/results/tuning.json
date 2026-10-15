@@ -4,17 +4,17 @@
       "clf__C": 1.0,
       "clf__class_weight": null
     },
-    "cv_f1_macro": 0.3239,
-    "cv_f1_macro_std": 0.0917
+    "cv_f1_macro": 0.2862,
+    "cv_f1_macro_std": 0.0767
   },
   "rf": {
     "best_params": {
-      "clf__max_depth": 10,
-      "clf__min_samples_leaf": 2,
+      "clf__max_depth": null,
+      "clf__min_samples_leaf": 1,
       "clf__n_estimators": 300
     },
-    "cv_f1_macro": 0.3656,
-    "cv_f1_macro_std": 0.0311
+    "cv_f1_macro": 0.324,
+    "cv_f1_macro_std": 0.0137
   },
   "xgb": {
     "best_params": {
@@ -22,7 +22,7 @@
       "clf__max_depth": 3,
       "clf__n_estimators": 600
     },
-    "cv_f1_macro": 0.3777,
-    "cv_f1_macro_std": 0.0714
+    "cv_f1_macro": 0.3513,
+    "cv_f1_macro_std": 0.0536
   }
 }

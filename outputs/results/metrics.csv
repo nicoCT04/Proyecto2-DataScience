@@ -1,0 +1,5 @@
+modelo,nombre,f1_macro,accuracy,balanced_accuracy,precision_macro,recall_macro,ap_macro,cv_f1_macro,cv_f1_macro_std,fit_s,infer_us_per_clip
+logreg,Regresión logística,0.2889,0.2928,0.3018,0.316,0.3018,0.2918,0.2862,0.0767,0.0167,0.4895
+rf,Random Forest,0.3041,0.3674,0.3769,0.4935,0.3769,0.3678,0.324,0.0137,0.1667,72.0066
+xgb,XGBoost,0.3473,0.3619,0.3719,0.3546,0.3719,0.3589,0.3513,0.0536,0.9077,7.2188
+gru,GRU (ResNet18),0.1137,0.1796,0.2468,0.2914,0.2468,0.2785,0.3158,0.0476,1.2689,5.7244

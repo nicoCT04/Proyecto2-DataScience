@@ -14,13 +14,17 @@ from sklearn.model_selection import GroupKFold
 
 FEATURES_CSV = "data/subclip_features.csv"
 META_COLS = ["file", "split", "label", "video_id", "match_id"]
+# Duracion del subclip y contexto previo al evento: dependen de como se recorto el
+# clip (los de background duran ~10 s y el resto ~6 s), no de la accion, y no existen
+# para un video nuevo. Se excluyen para no filtrar la etiqueta.
+LEAKY_COLS = ["duration_s", "lead_s"]
 LABELS = ["background", "challenge", "play", "throwin"]
 N_SPLITS = 5
 
 
 def feature_columns(df):
-    """Columnas numericas de entrada (todo lo que no es metadato)."""
-    return [c for c in df.columns if c not in META_COLS]
+    """Columnas numericas de entrada (sin metadatos ni variables del recorte)."""
+    return [c for c in df.columns if c not in META_COLS + LEAKY_COLS]
 
 
 def load_split(split, path=FEATURES_CSV):
