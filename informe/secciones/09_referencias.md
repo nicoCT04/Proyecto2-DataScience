@@ -12,6 +12,10 @@ Friedman, J. H. (2001). Greedy function approximation: A gradient boosting machi
 
 He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning for image recognition. En *2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)* (pp. 770–778). IEEE. https://doi.org/10.1109/CVPR.2016.90
 
+Saito, T., & Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. *PLoS ONE, 10*(3), Artículo e0118432. https://doi.org/10.1371/journal.pone.0118432
+
+Torralba, A., & Efros, A. A. (2011). Unbiased look at dataset bias. En *2011 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)* (pp. 1521–1528). IEEE. https://doi.org/10.1109/CVPR.2011.5995347
+
 Ullah, A., Ahmad, J., Muhammad, K., Sajjad, M., & Baik, S. W. (2018). Action recognition in video sequences using deep bi-directional LSTM with CNN features. *IEEE Access, 6*, 1155–1166. https://doi.org/10.1109/ACCESS.2017.2778011
 
 Vrigkas, M., Nikou, C., & Kakadiaris, I. A. (2015). A review of human activity recognition methods. *Frontiers in Robotics and AI, 2*, Artículo 28. https://doi.org/10.3389/frobt.2015.00028

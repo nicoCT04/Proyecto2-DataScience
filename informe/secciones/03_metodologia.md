@@ -15,7 +15,7 @@ encuentro entre entrenamiento y prueba:
 
 ## 3.2 Variables
 
-De cada subclip se calcularon **50 variables agregadas** que resumen la ventana completa,
+De cada subclip se calcularon **48 variables agregadas** que resumen la ventana completa,
 agrupadas en:
 
 - **Color e iluminación:** brillo, contraste, saturación y cobertura de cancha
@@ -26,13 +26,15 @@ agrupadas en:
 - **Jugadores:** número medio de jugadores detectados (YOLOv8) y su dispersión espacial.
 - **Balón:** visibilidad, velocidad, altura y distancia al jugador más cercano.
 
-No se encontraron valores faltantes en la matriz de variables.
+No se encontraron valores faltantes en la matriz de variables. La duración del subclip
+(`duration_s`) y el contexto previo al evento (`lead_s`) se excluyeron de los modelos:
+dependen de cómo se recortó cada clip y no de la acción (ver sección 4.2).
 
 ## 3.3 Modelos
 
 Se entrenaron dos familias de modelos complementarias:
 
-- **Modelos tabulares** sobre las 50 variables agregadas: **regresión logística**
+- **Modelos tabulares** sobre las 48 variables agregadas: **regresión logística**
   (con estandarización), **Random Forest** y **XGBoost**. Resuelven el problema con la
   información resumida de toda la ventana.
 - **Modelo temporal (GRU)** sobre la secuencia de embeddings de ResNet18 de los frames,
@@ -54,3 +56,19 @@ F1 por clase, matrices de confusión y curvas de precisión-recuerdo. Evaluar so
 partido completo no visto es deliberadamente exigente: refleja el uso real del sistema
 —analizar un encuentro nuevo— y evita el optimismo de mezclar frames de un mismo partido
 entre entrenamiento y prueba.
+
+## 3.6 Herramientas y recursos de cómputo
+
+- **Recursos de cómputo.** Todo el proyecto se ejecutó en una computadora portátil Apple
+  M4 Pro con 24 GB de memoria. YOLOv8 y ResNet18 corren en la GPU integrada mediante
+  Metal (MPS) y los modelos se entrenan en CPU. No se necesitó GPU dedicada porque la CNN
+  se usa congelada y los modelos de clasificación son pequeños; extraer las variables de
+  una ventana tarda entre 0.4 y 2 s.
+- **Lenguaje y bibliotecas.** Python 3.11 con OpenCV (lectura de video, flujo óptico de
+  Farnebäck, color y bordes), Ultralytics YOLOv8 (jugadores y balón), PyTorch y torchvision
+  (ResNet18 y GRU), scikit-learn (regresión logística, Random Forest, validación cruzada y
+  métricas), XGBoost, pandas y NumPy (datos), Matplotlib (figuras del informe), Streamlit y
+  Plotly (aplicación y gráficas interactivas) y python-docx (armado del informe).
+- **Versionado.** El código, los modelos entrenados y los resultados se versionan en
+  GitHub; los videos se descargan con scripts desde Hugging Face porque pesan varios GB.
+
