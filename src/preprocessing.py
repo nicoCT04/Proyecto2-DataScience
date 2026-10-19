@@ -17,6 +17,11 @@ import os
 
 # debe definirse antes de abrir cualquier VideoCapture
 os.environ.setdefault("OPENCV_FFMPEG_CAPTURE_OPTIONS", "ignore_editlist;1")
+if os.name == "nt":
+    # en Windows el backend FFmpeg de OpenCV lee el entorno de msvcrt, que no ve os.environ
+    import ctypes
+    ctypes.cdll.msvcrt._putenv(
+        f"OPENCV_FFMPEG_CAPTURE_OPTIONS={os.environ['OPENCV_FFMPEG_CAPTURE_OPTIONS']}".encode())
 
 from dataclasses import dataclass  # noqa: E402
 from pathlib import Path  # noqa: E402
