@@ -16,3 +16,4 @@ plotly
 python-docx
 python-pptx
 docx2pdf
+imageio-ffmpeg

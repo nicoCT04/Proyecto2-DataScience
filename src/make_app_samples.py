@@ -2,7 +2,9 @@
 
 Toma un subclip por clase del partido de prueba (nunca visto en entrenamiento), lo
 descarga de Hugging Face (ManuD/dfl_clips) si no está en data/subclips/ y lo copia con
-su nombre original, que la app usa para ubicar el momento del evento.
+su nombre original, que la app usa para ubicar el momento del evento. Además lo
+re-empaqueta sin la edit list (sin recodificar): así el reproductor de la app muestra el
+clip completo y no solo lo posterior al evento, igual que lo que analiza el modelo.
 
 Criterio de selección (documentado en la app): por cada clase, el subclip que XGBoost
 clasifica correctamente con mayor probabilidad; sirven como demostración del flujo,
@@ -12,14 +14,25 @@ También guarda app/samples/samples.csv con la etiqueta real de cada ejemplo.
 Uso desde la raíz (después de src/evaluate.py): python src/make_app_samples.py
 """
 import shutil
+import subprocess
 import urllib.request
 from pathlib import Path
 
+import imageio_ffmpeg
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "app" / "samples"
 BASE = "https://huggingface.co/datasets/ManuD/dfl_clips/resolve/main/subclips"
+
+
+def drop_editlist(path):
+    """Re-empaqueta el mp4 sin edit list para que se reproduzca completo."""
+    tmp = path.with_suffix(".tmp.mp4")
+    subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-y", "-ignore_editlist", "1",
+                    "-i", str(path), "-map", "0:v:0", "-c", "copy", "-movflags", "+faststart",
+                    str(tmp)], check=True)
+    tmp.replace(path)
 
 
 def main():
@@ -38,6 +51,7 @@ def main():
         elif not out.exists():
             print(f"Descargando {r.file} ...", flush=True)
             urllib.request.urlretrieve(f"{BASE}/{r.file}", out)
+        drop_editlist(out)
         rows.append({"file": name, "label": r.label, "match_id": r.match_id})
     pd.DataFrame(rows).to_csv(DEST / "samples.csv", index=False)
     size = sum(p.stat().st_size for p in DEST.glob("*.mp4")) / 1e6
