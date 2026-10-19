@@ -16,12 +16,13 @@ secuencias, una representación de apariencia congelada no separa la acción del
 visual del partido.
 
 **Objetivo 3 — evaluación en un partido no visto.** Se cumplió. Los cuatro modelos se
-evaluaron una sola vez en el partido `3c993bd2` con F1 macro, F1 por clase, matrices de
+evaluaron una sola vez en el partido `3c993bd2` con el azar (0.25) como referencia: F1 macro, F1 por clase, matrices de
 confusión, curvas de precisión-recall, importancia por permutación y tiempos. **XGBoost es
 el mejor modelo** (F1 macro 0.347, exactitud 36 %, frente a 0.25 del azar) y el único cuya
 validación cruzada anticipó bien su desempeño en prueba.
 
-**Objetivo 4 — aplicación.** Se cumplió. La aplicación en Streamlit permite explorar las
+**Objetivo 4 — aplicación.** Se cumplió. La aplicación en Streamlit integra los cuatro
+modelos y clasifica video nuevo con el mismo preprocesamiento que el entrenamiento. Permite explorar las
 variables tras la limpieza, clasificar un video subido con uno, varios o todos los modelos
 (un momento o el video completo) y revisar el rendimiento en gráficas interactivas que se
 pueden ocultar. Se verificó que su preprocesamiento reproduce el del entrenamiento.
@@ -51,6 +52,13 @@ y qué no:
   validación cruzada agrupada anticipó bien el resultado de XGBoost en el partido nuevo
   (0.351 frente a 0.347).
 
+En respuesta a la pregunta planteada, sí es posible reconocer de forma automática parte de
+las acciones en una ventana de 1.6 s —el pase y el saque de banda mejor que el azar—, pero no
+la disputa. Tres limitaciones de los datos explican buena parte del resultado: los subclips
+**terminan justo en el evento**, por lo que no hay contexto de lo que ocurre después; el
+**balón casi no se detecta**, porque ocupa muy pocos píxeles en el plano general; y solo hubo **siete partidos**
+para entrenar.
+
 ## 8.3 Trabajo futuro
 
 1. **Más partidos de entrenamiento** y normalización de color por partido para reducir el
@@ -60,5 +68,8 @@ y qué no:
    red temporal no dependa de la apariencia del partido.
 3. **Seguimiento de jugadores y balón** entre cuadros (por ejemplo, YOLO reentrenado para el
    balón más un *tracker*) para describir la interacción que define una disputa o un pase.
-4. **Localización temporal**: usar la línea de tiempo de la aplicación como detector de
+4. **Contexto después del evento**: recortar ventanas que incluyan los cuadros posteriores
+   a la acción (el destino del pase, el resultado de la disputa), que hoy no están en los
+   subclips.
+5. **Localización temporal**: usar la línea de tiempo de la aplicación como detector de
    candidatos y evaluarla con tolerancia temporal sobre partidos completos.

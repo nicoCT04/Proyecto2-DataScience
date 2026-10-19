@@ -63,7 +63,7 @@ entre entrenamiento y prueba.
   M4 Pro con 24 GB de memoria. YOLOv8 y ResNet18 corren en la GPU integrada mediante
   Metal (MPS) y los modelos se entrenan en CPU. No se necesitó GPU dedicada porque la CNN
   se usa congelada y los modelos de clasificación son pequeños; extraer las variables de
-  una ventana tarda entre 0.4 y 2 s.
+  una ventana tarda entre 0.4 y 2 s, y las de los 762 subclips, unos 7 minutos.
 - **Lenguaje y bibliotecas.** Python 3.11 con OpenCV (lectura de video, flujo óptico de
   Farnebäck, color y bordes), Ultralytics YOLOv8 (jugadores y balón), PyTorch y torchvision
   (ResNet18 y GRU), scikit-learn (regresión logística, Random Forest, validación cruzada y

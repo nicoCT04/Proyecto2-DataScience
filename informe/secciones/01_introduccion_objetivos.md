@@ -2,6 +2,11 @@
 
 ## 1.1 Introducción
 
+Hoy cada pase, disputa y saque de banda de un partido lo anota una persona que revisa los
+90 minutos de transmisión. Es un trabajo lento y caro que no escala a todos los partidos de
+todas las ligas. Este proyecto busca responder una pregunta concreta: **¿se puede reconocer
+automáticamente qué acción ocurre en una ventana de 1.6 s de transmisión?**
+
 En la fase de análisis exploratorio se caracterizaron los 200 clips de video de la
 Bundesliga y se confirmó que las señales visuales necesarias para reconocer acciones
 con balón están presentes: la cancha se aísla por color, los jugadores son detectables
@@ -20,18 +25,19 @@ durante el entrenamiento, para medir la generalización de forma realista.
 
 ## 1.2 Objetivos
 
-**Objetivo general.** Desarrollar y comparar modelos de clasificación que identifiquen
-la acción (pase, disputa, saque de banda o fondo) en subclips de video de la Bundesliga,
-evaluando su capacidad de generalizar a un partido no visto.
+**Objetivo general.** Comparar modelos de clasificación de acciones (pase, disputa, saque
+de banda o fondo) en video de la Bundesliga según su capacidad de generalizar a un partido
+no visto.
 
 **Objetivos específicos.**
 
-1. Entrenar modelos tabulares (regresión logística, Random Forest y XGBoost) sobre las
-   variables agregadas de cada subclip, ajustando sus hiperparámetros mediante validación
-   cruzada por partido (GroupKFold sobre `match_id`) con métrica F1 macro.
-2. Entrenar un modelo temporal (GRU) sobre la secuencia de embeddings de ResNet18 de los
-   frames y compararlo con los modelos tabulares.
-3. Evaluar todos los modelos en un partido de prueba retenido, reportando F1 macro,
-   F1 por clase y matrices de confusión, e interpretar los errores.
-4. Integrar el mejor modelo en una aplicación que permita explorar los datos y predecir
-   la acción sobre video nuevo.
+1. Entrenar regresión logística, Random Forest y XGBoost sobre las variables agregadas de
+   cada subclip, ajustando sus hiperparámetros con validación cruzada por partido
+   (GroupKFold sobre `match_id`) y F1 macro como métrica.
+2. Entrenar un modelo temporal (GRU) sobre la secuencia de cuadros de cada ventana,
+   representados con embeddings de ResNet18.
+3. Evaluar los cuatro modelos en un partido no visto mediante F1 macro, tomando el azar
+   con cuatro clases (0.25) como referencia, e interpretar sus errores con el F1 por clase
+   y las matrices de confusión.
+4. Integrar los modelos en una aplicación que clasifique video nuevo con el mismo
+   preprocesamiento que el entrenamiento.
